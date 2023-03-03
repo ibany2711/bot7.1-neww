@@ -4,7 +4,7 @@ services:
   web:
     build: .
     ports:
-      - 8088:8088
+      
     volumes:
       - .:/usr/src/app
     stop_signal: SIGKILL

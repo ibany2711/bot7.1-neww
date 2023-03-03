@@ -14,8 +14,8 @@ def text_progres(index,max):
 		index_make = 1
 		make_text += '\n['
 		while(index_make<21):
-			if porcent >= index_make * 5: make_text+='█'
-			else: make_text+='░'
+			if porcent >= index_make * 5: make_text+='●'
+			else: make_text+='○'
 			index_make+=1
 		make_text += ']\n'
 		return make_text
@@ -117,11 +117,11 @@ def createFilesMsg(evfiles):
     return msg
 def createStat(username,userdata,isadmin):
     from pyobigram.utils import sizeof_fmt
-    msg = '⚙️Configuraciones De Usuario⚙️\n\n'
+   msg = '⚙️Configuraciones De Usuario⚙️\n\n'
     msg+= '🔖Nombre: @' + str(username)+'\n'
-    msg+= '📑User: ' + str(userdata['moodle_user'])+'\n'
-    msg+= '🗳Password: ' + str(userdata['moodle_password']) +'\n'
-    msg+= '📡Host: ' + str(userdata['moodle_host'])+'\n'
+    msg+= '👤 Usuario: ' + str(userdata['moodle_user'])+'\n'
+    msg+= '🔑Contraseña: ' + str(userdata['moodle_password']) +'\n'
+    msg+= '📡Nube: ' + str(userdata['moodle_host'])+'\n'
     if userdata['cloudtype'] == 'moodle':
         msg+= '🏷RepoID: ' + str(userdata['moodle_repo_id'])+'\n'
     msg+= '🏷CloudType: ' + str(userdata['cloudtype'])+'\n'
@@ -129,14 +129,14 @@ def createStat(username,userdata,isadmin):
     if userdata['cloudtype'] == 'cloud':
         msg+= '🗂Dir: /' + str(userdata['dir'])+'\n'
     msg+= '📚Tamaño de Zips : ' + sizeof_fmt(userdata['zips']*1024*1024) + '\n\n'
-    msgAdmin = '❌'
+    msgAdmin = '🚫'
     if isadmin:
         msgAdmin = '✅'
-    msg+= '🦾Admin : ' + msgAdmin + '\n'
-    proxy = '❌'
+    msg+= '🛡️Admin : ' + msgAdmin + '\n'
+    proxy = '😓'
     if userdata['proxy'] !='':
        proxy = '✅'
-    rename = '❌'
+    rename = '🚫'
     if userdata['rename'] == 1:
        rename = '✅'
     msg+= '📝Rename : ' + rename + '\n'

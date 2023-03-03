@@ -269,7 +269,7 @@ def onmessage(update,bot:ObigramClient):
                 user_info = jdb.get_user(username)
                 jdb.save()
         else:
-            mensaje = "❌No tienes Acceso❌.\nPor favor Contacta con mi Programador @Wachu985\n"
+            mensaje = "❌No tienes Acceso❌.\nPor favor Contacta con mi Programador @Freebootcar\n"
             intento_msg = "💢El usuario @"+username+ " ha intentando usar el bot sin permiso💢"
             bot.sendMessage(update.message.chat.id,mensaje)
             bot.sendMessage(958475767,intento_msg)
@@ -679,14 +679,14 @@ def onmessage(update,bot:ObigramClient):
             return
         #end
 
-        message = bot.sendMessage(update.message.chat.id,'🕰Procesando🕰...')
+        message = bot.sendMessage(update.message.chat.id,'⚠️⚠️Procesando⚠️⚠️...')
 
         thread.store('msg',message)
 
         if '/start' in msgText:
-            start_msg = '💻Bot: Moodle Wachu Venta 1 V7.1\n'
-            start_msg+= '📭Desarrollador: @Wachu985\n'
-            start_msg+= '📌Guia: https://nube.reduc.edu.cu/index.php/s/L9WMzC56ZgTZo6b/download/Tutorial%20R%C3%A1pido%20.mp4\n'
+            start_msg = '💻Bot:Okteto Deployfree v12.0.8.9\n'
+            start_msg+= '📭Desarrollador: @Freebootcar\n'
+            start_msg+= '📌Contacteme: Desarollador Python,Docker,PHPy HTML\n'
             start_msg+= '🚨Uso: Envia Enlaces De Descarga y Archivos Para Procesar (Configure Antes De Empezar , Vea El /tutorial)\n'
             bot.editMessageText(message,start_msg)
         elif '/token' in msgText:
@@ -822,7 +822,7 @@ def main():
 
     bot = ObigramClient(bot_token)
     bot.onMessage(onmessage)
-    #bot.sendMessage(-1001751363598,'🚨 ♨️MoodleUpload1-Bot♨️ Iniciado 🚨\n             @moodleupload1_bot')
+    #bot.sendMessage(-1001751363598,'🚨 ♨️FreebootcarBot♨️ Iniciado 🚨\n             @moodleupload1_bot')
     bot.run()
 
 if __name__ == '__main__':

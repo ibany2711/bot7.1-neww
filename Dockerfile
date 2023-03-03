@@ -6,9 +6,9 @@ COPY . /app/
 
 RUN pip install -r requirements.txt
 
-CMD ["python", "main.py", "runserver", "127.0.0.1:5000"]
+CMD ["python", "main.py", "runserver", "0.0.0.0:3000"]
 
-EXPOSE 5000
+EXPOSE 3000
 
 
 

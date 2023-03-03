@@ -1,6 +1,6 @@
 FROM python:3.7.13
 
-RUN apt-get install update && apt-get install --yes pipenv
+RUN apt-get install update --yes pipenv
 WORKDIR /app
 
 COPY ./ /app/

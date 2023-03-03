@@ -1,8 +1,8 @@
 FROM python:3.7.13
 
 RUN apt-get update && apt-get install --yes pipenv
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY ./ /usr/src/app/
+COPY ./ /app/
 RUN pipenv install --deploy --ignore-pipfile
 CMD pipenv run python main.py

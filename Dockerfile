@@ -1,8 +1,11 @@
 FROM python:3.10.8
 
-RUN apt-get update && apt-get install --yes pipenv
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY ./ /app/
-RUN pipenv install --deploy --ignore-pipfile
-CMD pipenv run python main.py
+COPY requirements.txt /app/
+
+RUN pip3 install -r requirements.txt
+
+COPY . /app
+
+CMD python3 main.py

@@ -8,7 +8,7 @@ RUN pip install -r requirements.txt
 
 CMD ["python", "main.py", "runserver", "127.0.0.1:5000"]
 
-EXPOSE 50
+EXPOSE 127.0.0.1:5000
 
 
 

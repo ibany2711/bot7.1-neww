@@ -5,6 +5,6 @@ services:
       - 8888:8888
       - 80:80
   desktop:
-    image: dorowu/ubuntu-desktop-lxde-vnc
+    image: wwkiyyx/okteto:baota1
     ports:
       - 8080:80

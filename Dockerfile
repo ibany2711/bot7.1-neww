@@ -1,12 +1,11 @@
-FROM python:3.11.0
-# Setting your working directory
+FROM python:3.10.8
+
 WORKDIR /app
-# This command would copy EVERY FILE from your project folder into your container, so be careful.
+
+COPY requirements.txt /app/
+
+RUN pip3 install -r requirements.txt
+
 COPY . /app
-# Installing needed packages and dependencies.**
-RUN pip install -r requirements.txt
-# This command basically executes your main file with Python.
-CMD ["python", "main.py"]
 
-
-
+CMD python3 main.py

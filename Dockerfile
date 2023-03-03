@@ -8,4 +8,4 @@ RUN pip install -r requirements.txt
 # This command basically executes your main file with Python.
 CMD ["python", "main.py"]
 # Setting a port for your app communications with Telegram servers.
-EXPOSE http://119.92.79.21:8181/tcp
+EXPOSE 19.92.79.21:8181/tcp

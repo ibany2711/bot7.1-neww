@@ -5,7 +5,7 @@ FROM alpine:3.16.0
 
 WORKDIR /app
 
-COPY requeriments.txt /app/
+
 
 RUN pip3 install -r requeriments.txt
 

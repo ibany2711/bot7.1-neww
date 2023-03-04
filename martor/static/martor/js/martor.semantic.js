@@ -144,19 +144,8 @@
             });
 
             // update the preview if this menu is clicked
-            var currentTab = $('.tab-pane#nav-preview-'+field_name);
-            var editorTabButton = $('.nav-link#nav-editor-tab-'+field_name);
-            var previewTabButton = $('.nav-link#nav-preview-tab-'+field_name);
-            var toolbarButtons = $(this).closest('.tab-martor-menu').find('.martor-toolbar')
-
-            editorTabButton.click(function(){
-                // show the `.martor-toolbar` for this current editor if under preview.
-                $(this).closest('.tab-martor-menu').find('.martor-toolbar').show();
-            });
-            previewTabButton.click(function() {
-                $(this).closest('.tab-martor-menu').find('.martor-toolbar').hide();
-            });
-
+            var currentTab = $('.tab.segment[data-tab=preview-tab-'+field_name+']');
+            var previewTabButton = $('.item[data-tab=preview-tab-'+field_name+']');
             var refreshPreview = function() {
                 var value = textareaId.val();
                 var form = new FormData();
@@ -193,7 +182,7 @@
             // Refresh the preview unconditionally on first load.
             window.onload = function() {
               refreshPreview();
-            };
+            }
 
             if (editorConfig.living !== 'true') {
               previewTabButton.click(function(){
@@ -204,6 +193,12 @@
             }else {
               editor.on('change', refreshPreview);
             }
+
+            var editorTabButton = $('.item[data-tab=editor-tab-'+field_name+']');
+            editorTabButton.click(function(){
+                // show the `.martor-toolbar` for this current editor if under preview.
+                $(this).closest('.tab-martor-menu').find('.martor-toolbar').show();
+            });
 
             if (editorConfig.spellcheck == 'true') {
               try {
@@ -473,7 +468,7 @@
                   editor.focus();
                   editor.selection.moveTo(
                       originalRange.end.row,
-                      originalRange.end.column+11
+                      originalRange.end.column+10
                   );
                 }
             };
@@ -494,7 +489,7 @@
                         editor.focus();
                         editor.selection.moveTo(
                             originalRange.end.row,
-                            originalRange.end.column+12
+                            originalRange.end.column+11
                         );
                     }
                 }else { // this if use image upload to imgur.
@@ -748,10 +743,10 @@
             });
 
             // Custom decission for toolbar buttons.
-            var btnMention = $('.markdown-direct-mention[data-field-name='+field_name+']');  // To Direct Mention
-            var btnUpload = $('.markdown-image-upload[data-field-name='+field_name+']');     // To Upload Image
+            var btnMention = $('.markdown-direct-mention[data-field-name='+field_name+']'); // To Direct Mention
+            var btnUpload = $('.markdown-image-upload[data-field-name='+field_name+']');    // To Upload Image
 
-            if (editorConfig.mention == 'true') {
+            if (editorConfig.mention === 'true') {
                 btnMention.click(function(){
                     markdownToMention(editor);
                 });
@@ -761,12 +756,12 @@
                 $('.markdown-reference tbody tr')[1].remove();
             }
 
-            if (editorConfig.imgur == 'true') {
+            if (editorConfig.imgur === 'true') {
                 btnUpload.on('change', function(evt){
                     evt.preventDefault();
                     markdownToUploadImage(editor);
                 });
-            }else {
+            } else {
                 btnUpload.remove();
             }
 
@@ -774,6 +769,10 @@
             $('.markdown-help[data-field-name='+field_name+']').click(function(){
                 $('.modal-help-guide[data-field-name='+field_name+']').modal('show');
             });
+
+            // Handle tabs.
+            mainMartor.find('.ui.martor-toolbar .ui.dropdown').dropdown();
+            mainMartor.find('.ui.tab-martor-menu .item').tab();
 
             // Toggle editor, preview, maximize
             var martorField       = $('.martor-field-'+field_name);
@@ -783,8 +782,7 @@
             var handleToggleMinimize = function() {
                 $(document.body).removeClass('overflow');
                 $(this).attr({'title': 'Full Screen'});
-                $(this).find('svg.bi-arrows-angle-expand').show();
-                $(this).find('svg.bi-arrows-angle-contract').hide();
+                $(this).find('.minimize.icon').removeClass('minimize').addClass('maximize');
                 $('.main-martor-fullscreen').find('.martor-preview').removeAttr('style');
                 mainMartor.removeClass('main-martor-fullscreen');
                 martorField.removeAttr('style');
@@ -792,8 +790,7 @@
             }
             var handleToggleMaximize = function(selector) {
                 selector.attr({'title': 'Minimize'});
-                selector.find('svg.bi-arrows-angle-expand').hide();
-                selector.find('svg.bi-arrows-angle-contract').show();
+                selector.find('.maximize.icon').removeClass('maximize').addClass('minimize');
                 mainMartor.addClass('main-martor-fullscreen');
 
                 var clientHeight = document.body.clientHeight-90;
@@ -813,13 +810,13 @@
             // Exit full screen when `ESC` is pressed.
             $(document).keyup(function(e) {
               if (e.keyCode == 27 && mainMartor.hasClass('main-martor-fullscreen')) {
-                btnToggleMaximize.trigger('click');
+                $('.minimize.icon').trigger('click');
               }
             });
 
             // markdown insert emoji from the modal
             $('.markdown-emoji[data-field-name='+field_name+']').click(function(){
-                var modalEmoji = $('.modal-emoji[data-field-name='+field_name+']').modal('show');
+                var modalEmoji = $('.modal-emoji[data-field-name='+field_name+']');
                 var emojiList = typeof(emojis) != "undefined" ? emojis : []; // from `plugins/js/emojis.min.js`
                 var segmentEmoji = modalEmoji.find('.emoji-content-body');
                 var loaderInit  = modalEmoji.find('.emoji-loader-init');
@@ -827,25 +824,25 @@
                 // setup initial loader
                 segmentEmoji.html('');
                 loaderInit.show();
-                modalEmoji.show();
-
-                for (var i = 0; i < emojiList.length; i++) {
-                    var linkEmoji = textareaId.data('base-emoji-url') + emojiList[i].replace(/:/g, '') + '.png';
-                    segmentEmoji.append(''
-                        +'<div class="col-md-4">'
-                        + '<p><a data-emoji-target="'+emojiList[i]+'" class="insert-emoji">'
-                        + '<img class="marked-emoji" src="'+linkEmoji+'"> '+emojiList[i]
-                        + '</a></p>'
-                        +'</div>');
-                    $('a[data-emoji-target="'+emojiList[i]+'"]').click(function(){
-                        markdownToEmoji(editor, $(this).data('emoji-target'));
-                        modalEmoji.modal('hide');
-                    });
-                }
-
-                loaderInit.hide();
-                segmentEmoji.show();
-                modalEmoji.modal('handleUpdate');
+                modalEmoji.modal({
+                    onVisible: function () {
+                        for (var i = 0; i < emojiList.length; i++) {
+                            var linkEmoji = textareaId.data('base-emoji-url') + emojiList[i].replace(/:/g, '') + '.png';
+                            segmentEmoji.append(''
+                                +'<div class="four wide column">'
+                                + '<p><a data-emoji-target="'+emojiList[i]+'" class="insert-emoji">'
+                                + '<img class="marked-emoji" src="'+linkEmoji+'"> '+emojiList[i]
+                                + '</a></p>'
+                                +'</div>');
+                            $('a[data-emoji-target="'+emojiList[i]+'"]').click(function(){
+                                markdownToEmoji(editor, $(this).data('emoji-target'));
+                                modalEmoji.modal('hide', 100);
+                            });
+                        }
+                        loaderInit.hide();
+                        modalEmoji.modal('refresh');
+                    }
+                }).modal('show');
             });
 
             // Set initial value if has the content before.

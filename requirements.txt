@@ -16,4 +16,6 @@ tgcrypto
 aiohttp
 yarl
 aiohttp_socks==0.7.1
-
+Django>=3.2
+Markdown==3.3.4
+bleach

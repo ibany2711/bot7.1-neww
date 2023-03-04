@@ -11,4 +11,4 @@ RUN pip install -r requirements.txt
 
 EXPOSE 8000/tcp
 ENTRYPOINT [ "tini", "--" ]
-CMD [ "python3", "main.py", "runserver", "0.0.0.0:8000" ]
+CMD [ "python3", "main.py", "/app/martor_demo/manage.py", "runserver", "0.0.0.0:8000" ]

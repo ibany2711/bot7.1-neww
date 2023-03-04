@@ -1,42 +1,15 @@
-FROM alpine:3.16.0
-
+# Choosing an image for you container.
+FROM python:3.10.8
+# Setting your working directory
 WORKDIR /app
-
-RUN set -xe;
-
+# This command would copy EVERY FILE from your project folder into your container, so be careful.
 COPY . .
-
-RUN apk add --no-cache python3 py3-pip tini; \
-    pip install --upgrade pip setuptools-scm; \
-    python3 setup.py install; \
-    python3 martor_demo/manage.py makemigrations; \
-    python3 martor_demo/manage.py migrate; \
-    addgroup -g 1000 appuser; \
-    adduser -u 1000 -G appuser -D -h /app appuser; \
-    chown -R appuser:appuser /app
-
-USER appuser
+# Installing needed packages and dependencies.**
+RUN pip install -r requirements.txt
+# This command basically executes your main file with Python.
+CMD ["python", "main.py"]
+# Setting a port for your app communications with Telegram servers.
 EXPOSE 8000/tcp
-ENTRYPOINT [ "tini", "--" ]
-CMD [ "python3", "/app/martor_demo/manage.py", "runserver", "0.0.0.0:8000" ]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

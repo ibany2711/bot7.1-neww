@@ -1,11 +1,19 @@
 FROM python:3.10.8
 FROM alpine:3.16.0
-WORKDIR /usr/src/app
-
-RUN apt-get update && apt-get install requirements.txt --yes pipenv
 
 
-COPY ./ /usr/src/app/
+
+WORKDIR /app
+
+COPY requeriments.txt /app/
+
+RUN pip3 install -r requeriments.txt
+
+COPY . /app
+
+
+
+
 
 
 

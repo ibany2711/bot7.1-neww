@@ -5,6 +5,7 @@ WORKDIR /app
 
 
 COPY . /app/
+
 RUN pip install -r requirements.txt
 
 RUN set -xe;
@@ -19,7 +20,6 @@ RUN apk add --no-cache python3 py3-pip tini; \
     addgroup -g 1000 appuser; \
     adduser -u 1000 -G appuser -D -h /app appuser; \
     chown -R appuser:appuser /app
-
 USER appuser
 EXPOSE 8000/tcp
 ENTRYPOINT [ "tini", "--" ]

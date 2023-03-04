@@ -2,7 +2,7 @@ FROM python:3.10.8
 FROM alpine:3.16.0
 WORKDIR /app
 
-COPY requeriments.txt /app/
+COPY requirements.txt /app/
 
 RUN pip3 install -r requirements.txt
 
